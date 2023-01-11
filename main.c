@@ -24,6 +24,9 @@ int main(int argc, char**argv) {
     if (strcmp(argv[1], "random") == 0) {
         ramSize = atoi(argv[2]);
         instructions = generateRandomInstructions(ramSize);
+    } else if (strcmp(argv[1], "multiply") == 0) {      //Multiplicacao
+        ramSize = atoi(argv[2]);
+        instructions = generateMultiplicationInstructions(argv[2], ramSize);
     } else if (strcmp(argv[1], "file") == 0) {
         instructions = readInstructions(argv[2], &ramSize);
     } 

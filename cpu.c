@@ -61,6 +61,28 @@ void run(Machine* machine) {
                 printf("  > Subtraindo RAM[%d] (%f) com RAM[%d] (%f) e salvando na RAM[%d] (%f).\n", 
                                 address1, RAMContent1, address2, RAMContent2, address3, result);
                 break;
+            case 3: // Multiplicacao
+                address1 = instruction.info1;
+                address2 = instruction.info2;
+                RAMContent1 = machine->RAM.items[address1];
+                RAMContent2 = machine->RAM.items[address2];
+                result = RAMContent1 * RAMContent2;         //Problema ta aq
+                address3 = instruction.info3;
+                machine->RAM.items[address3] = result;
+                printf("  > Multiplicando RAM[%d] (%f) com RAM[%d] (%f) e salvando na RAM[%d] (%f).\n", 
+                                address1, RAMContent1, address2, RAMContent2, address3, result);
+                break;
+            case 4: // Fatorial
+                address1 = instruction.info1;
+                address2 = instruction.info2;
+                RAMContent1 = machine->RAM.items[address1];
+                RAMContent2 = machine->RAM.items[address2];
+                result = RAMContent1 * RAMContent2;         //Problema ta aq
+                address3 = instruction.info3;
+                machine->RAM.items[address3] = result;
+                printf("  > Multiplicando RAM[%d] (%f) com RAM[%d] (%f) e salvando na RAM[%d] (%f).\n", 
+                                address1, RAMContent1, address2, RAMContent2, address3, result);
+                break;
         }
         PC++;
     }
