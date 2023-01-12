@@ -57,9 +57,11 @@ Instruction* readInstructions(char* fileName, int* ramSize) {
     return instructions;
 }
 
-Instruction* generateMultiplicationInstructions(int multiplier, int multiplying, int ramSize){
+Instruction* generateMultiplicationInstructions(int multiplier, int multiplying){
     
-    Instruction* instructions = (Instruction*) malloc((3 + multiplier) * sizeof(Instruction));
+    multiplier = multiplier - 2;
+
+    Instruction* instructions = (Instruction*) malloc((multiplier + 2) * sizeof(Instruction));
     
     //Three extra instructions:
     //  1 - Take multiplying to the memory
@@ -74,15 +76,115 @@ Instruction* generateMultiplicationInstructions(int multiplier, int multiplying,
     instructions[1].info2 = 1;  //Put zero
 
     for (int i = 0; i < multiplier; i++){
-        instructions[i+2].opcode = 1;   //Opcode ofr sum
+        instructions[i+2].opcode = 3;   //Opcode of Multiplication
         instructions[i+2].info1 = 0;    //Position of multiplying
-        instructions[i+2].info2 = 1;    //Position of multiplication result
-        instructions[i+2].info3 = 1;    //Position of multiplication result
+        instructions[i+2].info2 = (rand() % multiplier) + 2;    //Position of the number that will be part of the multiplication
+        instructions[i+2].info3 = (rand() % multiplier) + 2;    //Position of multiplication result
     }
 
-    //Inserindo a ultima instrução do programa  que nao faz nada que presta
-    instructions[multiplier + 2].opcode = 1;
+    instructions[multiplier].opcode = -1;
+    instructions[multiplier].info1 = -1;
+    instructions[multiplier].info2 = -1;
+    instructions[multiplier].info3 = -1;
      
+    return instructions;
+}
+
+Instruction* generateFibonacciInstructions(int max, int base){
     
+    Instruction* instructions = (Instruction*) malloc((2 + max) * sizeof(Instruction));
+    
+    //Three extra instructions:
+    //  1 - Take base number to the memory
+    //  2 - Putting zero in the position of the result in the RAM
+
+    instructions[0].opcode = 0;
+    instructions[0].info1 = 1;   //Content to be saved in RAM
+    instructions[0].info2 = 0;   //RAM position
+    
+    instructions[1].opcode = 0;     //Save the number
+    instructions[1].info1 = base;      //Initial number    
+    instructions[1].info2 = 1;      //RAM position
+
+    int position = 1;
+
+    for (int i = 0; i < max; i++){    
+        instructions[i+2].opcode = 4;   //Opcode of Fibonacci
+        instructions[i+2].info1 = position-1;    //Position of multiplying
+        instructions[i+2].info2 = position;    //Position of the number that will be part of the multiplication
+        instructions[i+2].info3 = position+1;    //Position of multiplication result
+        position++;
+    }
+
+    instructions[max].opcode = -1;
+    instructions[max].info1 = -1;
+    instructions[max].info2 = -1;
+    instructions[max].info3 = -1;
+     
+    return instructions;
+}
+
+Instruction* generateDivisionInstructions(int dividend, int divider){
+    
+    Instruction* instructions = (Instruction*) malloc((4) * sizeof(Instruction));
+    
+    //Three extra instructions:
+    //  1 - Take multiplying to the memory
+    //  2 - Putting zero in the position of the result in the RAM
+
+    instructions[0].opcode = 0;
+    instructions[0].info1 = dividend;   //First number
+    instructions[0].info2 = 0;   //RAM position
+    
+    instructions[1].opcode = 0;
+    instructions[1].info1 = divider;  //Second number
+    instructions[1].info2 = 1;  //RAM position
+
+    
+    instructions[2].opcode = 5;   //Opcode of division
+    instructions[2].info1 = 0;    //Position of dividend
+    instructions[2].info2 = 1;    //Position of divider
+    instructions[2].info3 = 2;    //Position of division result
+    
+
+    //Signaling the end
+
+    instructions[3].opcode = -1;
+    instructions[3].info1 = -1;
+    instructions[3].info2 = -1;
+    instructions[3].info3 = -1;
+     
+    return instructions;
+}
+
+Instruction* generateExponentialInstructions(int base, int exp){
+
+    Instruction* instructions = (Instruction*) malloc((4) * sizeof(Instruction));
+    
+    //Three extra instructions:
+    //  1 - Take base numbers to the memory
+    
+    instructions[0].opcode = 0;
+    instructions[0].info1 = base;   //First number
+    instructions[0].info2 = 0;   //RAM position
+    
+    instructions[1].opcode = 0;
+    instructions[1].info1 = exp;  //Second number
+    instructions[1].info2 = 1;  //RAM position
+
+    
+    instructions[2].opcode = 6;   //Opcode of division
+    instructions[2].info1 = 0;    //Position of dividend
+    instructions[2].info2 = 1;    //Position of divider
+    instructions[2].info3 = 2;    //Position of division result
+    
+
+    //Signaling the end
+
+    instructions[3].opcode = -1;
+    instructions[3].info1 = -1;
+    instructions[3].info2 = -1;
+    instructions[3].info3 = -1;
+     
     return instructions;
 }

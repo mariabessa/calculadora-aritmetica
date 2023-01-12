@@ -6,5 +6,8 @@
 Instruction* generateRandomInstructions(int);
 Instruction* generateMultiplicationInstructions(int, int);
 Instruction* readInstructions(char*, int*);
+Instruction* generateFibonacciInstructions(int, int);
+Instruction* generateDivisionInstructions(int, int);
+Instruction* generateExponentialInstructions(int, int);
 
 #endif // !GENERATOR_H

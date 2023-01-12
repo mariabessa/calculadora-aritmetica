@@ -66,21 +66,63 @@ void run(Machine* machine) {
                 address2 = instruction.info2;
                 RAMContent1 = machine->RAM.items[address1];
                 RAMContent2 = machine->RAM.items[address2];
-                result = RAMContent1 * RAMContent2;         //Problema ta aq
+                result = 0;
+                for(int i = 0; i < RAMContent1; i++)
+                    result = result + RAMContent2;        
                 address3 = instruction.info3;
                 machine->RAM.items[address3] = result;
-                printf("  > Multiplicando RAM[%d] (%f) com RAM[%d] (%f) e salvando na RAM[%d] (%f).\n", 
+                printf("  > Multiplicando RAM[%d] (%.0f) com RAM[%d] (%f) e salvando na RAM[%d] (%f).\n", 
                                 address1, RAMContent1, address2, RAMContent2, address3, result);
                 break;
-            case 4: // Fatorial
+            case 4: // Fibonacci
                 address1 = instruction.info1;
                 address2 = instruction.info2;
                 RAMContent1 = machine->RAM.items[address1];
                 RAMContent2 = machine->RAM.items[address2];
-                result = RAMContent1 * RAMContent2;         //Problema ta aq
+                result = RAMContent1 + RAMContent2;         //Problema ta aq
                 address3 = instruction.info3;
                 machine->RAM.items[address3] = result;
-                printf("  > Multiplicando RAM[%d] (%f) com RAM[%d] (%f) e salvando na RAM[%d] (%f).\n", 
+                printf("  > Somando na sequencia de Fibonacci RAM[%d] (%f) com RAM[%d] (%f) e salvando na RAM[%d] (%f).\n", 
+                                address1, RAMContent1, address2, RAMContent2, address3, result);
+                break;
+            case 5: //Divisao
+                address1 = instruction.info1;
+                address2 = instruction.info2;
+                RAMContent1 = machine->RAM.items[address1];
+                RAMContent2 = machine->RAM.items[address2];
+                result = 0;
+                int soma = 0;
+                for( ; ; ){
+                    soma = soma + RAMContent2;
+                    result++;
+                    if(soma == RAMContent1)
+                        break;
+                        else if(soma > RAMContent1){
+                            result -= 1;
+                            soma = 0;
+                            int RC2 = result;
+                        //    for( ; ; )
+
+                            break;
+                        }
+                }        
+                address3 = instruction.info3;
+                machine->RAM.items[address3] = result;
+                printf("  > Dividindo RAM[%d] (%.0f) com RAM[%d] (%.0f) e salvando na RAM[%d] (%f).\n", 
+                                address1, RAMContent1, address2, RAMContent2, address3, result);
+                break;
+            case 6: //Exponenciacao
+                address1 = instruction.info1;   
+                address2 = instruction.info2;   
+                RAMContent1 = machine->RAM.items[address1];     //basse
+                RAMContent2 = machine->RAM.items[address2];     //expoente
+                result = 0;
+                
+                    for(int i = 0; i < RAMContent2; i++)
+                        result = result + RAMContent1;        
+                address3 = instruction.info3;
+                machine->RAM.items[address3] = result;
+                printf("  >  RAM[%d] (%.0f) elevado por RAM[%d] (%f) e salvando na RAM[%d] (%f).\n", 
                                 address1, RAMContent1, address2, RAMContent2, address3, result);
                 break;
         }
