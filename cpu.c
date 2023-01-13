@@ -1,4 +1,5 @@
 #include "cpu.h"
+#include "generator.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -117,9 +118,19 @@ void run(Machine* machine) {
                 RAMContent1 = machine->RAM.items[address1];     //basse
                 RAMContent2 = machine->RAM.items[address2];     //expoente
                 result = 0;
-                
-                    for(int i = 0; i < RAMContent2; i++)
-                        result = result + RAMContent1;        
+                float aux = RAMContent1;
+                for(int i = 1; i < RAMContent2; i++){ 
+                    result = 0;
+                    for(int j = 0; j < RAMContent1; j++){
+                        result = result + aux;
+                        printf("\nresult = %f\n", result);
+                    }
+                    aux = result;
+                    printf("\naux = %f\n", aux);
+                }
+        
+                if(RAMContent2 == 1)
+                    result = RAMContent1;
                 address3 = instruction.info3;
                 machine->RAM.items[address3] = result;
                 printf("  >  RAM[%d] (%.0f) elevado por RAM[%d] (%f) e salvando na RAM[%d] (%f).\n", 

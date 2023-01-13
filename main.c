@@ -28,9 +28,10 @@ int main(int argc, char**argv) {
         ramSize = atoi(argv[2]);
         instructions = generateRandomInstructions(ramSize);
     } else if (strcmp(argv[1], "multiply") == 0) {      //Multiplicacao
-        ramSize = atoi(argv[2]) + 2;
-        int multiplying = atoi(argv[3]);
-        instructions = generateMultiplicationInstructions(ramSize, multiplying);
+        ramSize = 3;
+        int multiplying = atoi(argv[2]);
+        int multiplier = atoi(argv[3]);
+        instructions = generateMultiplicationInstructions(multiplier, multiplying);
     } else if (strcmp(argv[1], "file") == 0) {
         instructions = readInstructions(argv[2], &ramSize);
     } else if (strcmp(argv[1], "fibonacci") == 0) {
@@ -48,7 +49,7 @@ int main(int argc, char**argv) {
         int base, exp;
         base = atoi(argv[2]);
         exp = atoi(argv[3]);
-        instructions = generateExponetialInstructions(base, exp);
+        instructions = generateExponentialInstructions(base, exp);
     }
     else {
         printf("Opcao invalida.\n");

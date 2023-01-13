@@ -59,8 +59,6 @@ Instruction* readInstructions(char* fileName, int* ramSize) {
 
 Instruction* generateMultiplicationInstructions(int multiplier, int multiplying){
     
-    multiplier = multiplier - 2;
-
     Instruction* instructions = (Instruction*) malloc((multiplier + 2) * sizeof(Instruction));
     
     //Three extra instructions:
@@ -68,24 +66,22 @@ Instruction* generateMultiplicationInstructions(int multiplier, int multiplying)
     //  2 - Putting zero in the position of the result in the RAM
 
     instructions[0].opcode = 0;
-    instructions[0].info1 = multiplying;   //Content to be saved in RAM
+    instructions[0].info1 = multiplier;   //Content to be saved in RAM
     instructions[0].info2 = 0;   //RAM position
     
     instructions[1].opcode = 0;
-    instructions[1].info1 = 0;  //RAM position
-    instructions[1].info2 = 1;  //Put zero
+    instructions[1].info1 = multiplying;  //Content
+    instructions[1].info2 = 1;  //RAM Position
 
-    for (int i = 0; i < multiplier; i++){
-        instructions[i+2].opcode = 3;   //Opcode of Multiplication
-        instructions[i+2].info1 = 0;    //Position of multiplying
-        instructions[i+2].info2 = (rand() % multiplier) + 2;    //Position of the number that will be part of the multiplication
-        instructions[i+2].info3 = (rand() % multiplier) + 2;    //Position of multiplication result
-    }
+    instructions[2].opcode = 3;   //Opcode of multiplication
+    instructions[2].info1 = 0;    //Position of multiplier
+    instructions[2].info2 = 1;    //Position of multiplying
+    instructions[2].info3 = 2;    //Position of multiplication result
 
-    instructions[multiplier].opcode = -1;
-    instructions[multiplier].info1 = -1;
-    instructions[multiplier].info2 = -1;
-    instructions[multiplier].info3 = -1;
+    instructions[3].opcode = -1;
+    instructions[3].info1 = -1;
+    instructions[3].info2 = -1;
+    instructions[3].info3 = -1;
      
     return instructions;
 }
@@ -163,7 +159,7 @@ Instruction* generateExponentialInstructions(int base, int exp){
     
     //Three extra instructions:
     //  1 - Take base numbers to the memory
-    
+
     instructions[0].opcode = 0;
     instructions[0].info1 = base;   //First number
     instructions[0].info2 = 0;   //RAM position
