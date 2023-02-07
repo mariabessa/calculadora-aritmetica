@@ -19,7 +19,7 @@ Instruction* generateRandomInstructions(int ramSize) {
     Instruction* instructions = (Instruction*) malloc(10 * sizeof(Instruction));
 
     for (int i=0; i<9; i++){
-        instructions[i].opcode = rand() % 4; //0, 1, 2, 3
+        instructions[i].opcode = rand() % 3; //0, 1, 2, 3, 4
         instructions[i].info1 = rand() % ramSize; //0 ... RAM_SIZE
         do {
             instructions[i].info2 = rand() % ramSize; //0 ... RAM_SIZE
@@ -27,7 +27,8 @@ Instruction* generateRandomInstructions(int ramSize) {
         instructions[i].info3 = rand() % ramSize; //0 ... RAM_SIZE
     }
     
-    //inserindo a ultima instrucao do programa que nao faz nada que presta
+    //Signaling the end
+
     instructions[9].opcode =-1;
     instructions[9].info1 = -1;
     instructions[9].info2 = -1;
@@ -54,5 +55,122 @@ Instruction* readInstructions(char* fileName, int* ramSize) {
     }
     fclose(file); // Fechando o arquivo
 
+    return instructions;
+}
+
+Instruction* generateMultiplicationInstructions(int multiplier, int multiplying){
+    
+    Instruction* instructions = (Instruction*) malloc((multiplier + 2) * sizeof(Instruction));
+    
+    instructions[0].opcode = 0;
+    instructions[0].info1 = multiplier;   //Content to be saved in RAM
+    instructions[0].info2 = 0;   //RAM position
+    
+    instructions[1].opcode = 0;
+    instructions[1].info1 = multiplying;  //Content
+    instructions[1].info2 = 1;  //RAM Position
+
+    instructions[2].opcode = 3;   //Opcode of multiplication
+    instructions[2].info1 = 0;    //Position of multiplier
+    instructions[2].info2 = 1;    //Position of multiplying
+    instructions[2].info3 = 2;    //Position of multiplication result
+
+    //Signaling the end
+
+    instructions[3].opcode = -1;
+    instructions[3].info1 = -1;
+    instructions[3].info2 = -1;
+    instructions[3].info3 = -1;
+     
+    return instructions;
+}
+
+Instruction* generateFibonacciInstructions(int max, int base){
+    
+    Instruction* instructions = (Instruction*) malloc((2 + max) * sizeof(Instruction));
+    
+    instructions[0].opcode = 0;
+    instructions[0].info1 = 1;   //Content to be saved in RAM
+    instructions[0].info2 = 0;   //RAM position
+    
+    instructions[1].opcode = 0;     //Save the number
+    instructions[1].info1 = base;      //Initial number    
+    instructions[1].info2 = 1;      //RAM position
+
+    int position = 1;
+
+    for (int i = 0; i < max; i++){    
+        instructions[i+2].opcode = 4;   //Opcode of Fibonacci
+        instructions[i+2].info1 = position-1;   
+        instructions[i+2].info2 = position;    
+        instructions[i+2].info3 = position+1;   
+        position++;
+    }
+
+    //Signaling the end
+
+    instructions[max].opcode = -1;
+    instructions[max].info1 = -1;
+    instructions[max].info2 = -1;
+    instructions[max].info3 = -1;
+     
+    return instructions;
+}
+
+Instruction* generateDivisionInstructions(int dividend, int divider){
+    
+    Instruction* instructions = (Instruction*) malloc((4) * sizeof(Instruction));
+    
+    instructions[0].opcode = 0;
+    instructions[0].info1 = dividend;   //First number
+    instructions[0].info2 = 0;   //RAM position
+    
+    instructions[1].opcode = 0;
+    instructions[1].info1 = divider;  //Second number
+    instructions[1].info2 = 1;  //RAM position
+
+    
+    instructions[2].opcode = 5;   //Opcode of division
+    instructions[2].info1 = 0;    //Position of dividend
+    instructions[2].info2 = 1;    //Position of divider
+    instructions[2].info3 = 2;    //Position of division result
+    
+
+    //Signaling the end
+
+    instructions[3].opcode = -1;
+    instructions[3].info1 = -1;
+    instructions[3].info2 = -1;
+    instructions[3].info3 = -1;
+     
+    return instructions;
+}
+
+Instruction* generateExponentialInstructions(int base, int exp){
+
+    Instruction* instructions = (Instruction*) malloc((4) * sizeof(Instruction));
+    
+    instructions[0].opcode = 0;
+    instructions[0].info1 = base;   //First number
+    instructions[0].info2 = 0;   //RAM position
+    
+    instructions[1].opcode = 0;
+    instructions[1].info1 = exp;  //Second number
+    instructions[1].info2 = 1;  //RAM position
+
+    
+    instructions[2].opcode = 6;   //Opcode of exponential
+    instructions[2].info1 = 0;    
+    instructions[2].info2 = 1;    //Posição da base
+    instructions[2].info3 = 2;    //Posição do expoente
+    
+
+    //Signaling the end
+
+    instructions[3].opcode = -1;
+    instructions[3].info1 = -1;
+    instructions[3].info2 = -1;
+    instructions[3].info3 = -1;
+     
     return instructions;
 }
